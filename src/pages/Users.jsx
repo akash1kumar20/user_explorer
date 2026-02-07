@@ -4,15 +4,16 @@ import UserCard from "../components/UserCard";
 import Loader from "../helpers/Loader";
 
 function Users() {
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
       try {
         let res = await axios.get("https://jsonplaceholder.typicode.com/users");
-        let data = await res.data;
+        const data = res.data;
         if (res.status === 200) {
           setUsers(data);
         } else if (res.status !== 200) {
@@ -26,6 +27,7 @@ function Users() {
     }
     fetchData();
   }, []);
+
   if (loading) {
     return (
       <>
@@ -36,11 +38,13 @@ function Users() {
   if (error) {
     return <p>{error}</p>;
   }
-  return (
-    <>
-      <UserCard users={users} />
-    </>
-  );
+  if (users.length > 0) {
+    return (
+      <>
+        <UserCard users={users} />
+      </>
+    );
+  }
 }
 
 export default Users;
