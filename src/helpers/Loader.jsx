@@ -2,7 +2,7 @@ import React from "react";
 
 const Loader = () => {
   return (
-    <>
+    <div className="flex justify-center items-center ">
       <div className="w-32 h-32 relative flex items-center justify-center">
         <div className="absolute inset-0 rounded-xl bg-blue-500/20 blur-xl animate-pulse"></div>
 
@@ -26,7 +26,7 @@ const Loader = () => {
         <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-cyan-500 rounded-full animate-ping delay-200"></div>
         <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-blue-500 rounded-full animate-ping delay-300"></div>
       </div>
-    </>
+    </div>
   );
 };
 
