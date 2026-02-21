@@ -77,11 +77,7 @@ function Users({ filterBy, filterSelected }) {
             setSearchInput={setSearchInput}
           />
         )}
-        <UserCard
-          users={currentUsers}
-          filterBy={filterBy}
-          pageNo={currentPage}
-        />
+        <UserCard users={currentUsers} filterBy={filterBy} />
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

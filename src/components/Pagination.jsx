@@ -9,7 +9,7 @@ function Pagination({ currentPage, setCurrentPage, totalPages }) {
         Prev
       </button>
 
-      <span className="mx-4 underline underline-offset-6 decoration-blue-700">
+      <span className="mx-4 underline underline-offset-6 decoration-4 decoration-blue-700">
         {currentPage} / {totalPages}
       </span>
 
