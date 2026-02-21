@@ -33,6 +33,11 @@ function Users({ filterBy, filterSelected }) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchInput]);
+  //Now whenever filters change → page resets to 1.
+
   if (loading) {
     return (
       <>
@@ -67,6 +72,20 @@ function Users({ filterBy, filterSelected }) {
     //for the pagination, we're sliceing the data, now we only show 3 users/page
 
     const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
+    if (!loading && currentUsers.length === 0) {
+      return (
+        <div className="mt-4 bg-amber-700 text-xl text-white py-4 rounded-xl">
+          <p>No users match your search.</p>
+          <button
+            className="bg-red-500 text-black px-4 py-2 rounded-3xl mt-4 hover:bg-red-700 hover:text-white hover:cursor-pointer"
+            onClick={() => location.reload()}
+          >
+            Back
+          </button>
+        </div>
+      );
+    }
 
     return (
       <>
