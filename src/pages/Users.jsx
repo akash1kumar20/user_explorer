@@ -3,12 +3,15 @@ import { useEffect, useState } from "react";
 import UserCard from "../components/UserCard";
 import Loader from "../helpers/Loader";
 import SearchBar from "../components/SearchBar";
+import Pagination from "../components/Pagination";
 
 function Users({ filterBy, filterSelected }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchInput, setSearchInput] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 3;
 
   useEffect(() => {
     async function fetchData() {
@@ -42,6 +45,9 @@ function Users({ filterBy, filterSelected }) {
     return <p>{error}</p>;
   }
 
+  const lastIndex = currentPage * usersPerPage;
+  const firstIndex = lastIndex - usersPerPage;
+
   if (users.length > 0) {
     const filteredUsers = users.filter((user) =>
       String(user[filterBy] ?? "")
@@ -57,6 +63,11 @@ function Users({ filterBy, filterSelected }) {
     // If true → user stays in list
     // If false → user removed
 
+    const currentUsers = filteredUsers.slice(firstIndex, lastIndex);
+    //for the pagination, we're sliceing the data, now we only show 3 users/page
+
+    const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
     return (
       <>
         {filterSelected && (
@@ -66,7 +77,16 @@ function Users({ filterBy, filterSelected }) {
             setSearchInput={setSearchInput}
           />
         )}
-        <UserCard users={filteredUsers} filterBy={filterBy} />
+        <UserCard
+          users={currentUsers}
+          filterBy={filterBy}
+          pageNo={currentPage}
+        />
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
       </>
     );
   }
